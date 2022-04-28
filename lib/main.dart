@@ -6,12 +6,11 @@ void main() {
   runApp(const DesktopApp());
 }
 
-CircleAvatar StoryTemplate(String imageLoc, bool view){
-  return CircleAvatar(
-    child: Image.asset("imageLoc"),
-    radius: 30.0,
-  );
-}
+var buttonColors = WindowButtonColors(
+  iconNormal: Colors.white,
+  iconMouseDown: Colors.white10,
+  iconMouseOver: Colors.white,
+);
 
 class WindowButtons extends StatelessWidget {
   const WindowButtons({Key? key}) : super(key: key);
@@ -20,14 +19,17 @@ class WindowButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        MinimizeWindowButton(),
-        MaximizeWindowButton(),
+        MinimizeWindowButton(
+          colors: buttonColors,
+        ),
+        MaximizeWindowButton(
+          colors: buttonColors,
+        ),
         CloseWindowButton(),
       ],
     );
   }
 }
-
 
 class DesktopApp extends StatefulWidget {
   const DesktopApp({Key? key}) : super(key: key);
@@ -43,114 +45,87 @@ class _DesktopAppState extends State<DesktopApp> {
       title: "ChatterBot",
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(),
-      home: Builder(
-        builder: (context) {
-          return Scaffold(
-            // appBar: AppBar(
-            //   flexibleSpace: Padding(
-            //     padding: const EdgeInsets.only(
-            //       top: 9.0,
-            //     ),
-            //     child: Row(
-            //       crossAxisAlignment: CrossAxisAlignment.center,
-            //       mainAxisAlignment: MainAxisAlignment.start,
-            //       children: [
-            //         const SizedBox(
-            //           width: MediaQuery.of(context).size.width,
-            //         ),
-            //         Image.network(
-            //           "https://www.instagram.com/static/images/web/logged_out_wordmark-dark.png/de0f46ab251e.png",
-            //           width: 5,
-            //           height: 80.0,
-            //           //fit: BoxFit.cover,
-            //         ),
-            //         const SizedBox(width: 100.0,),
-            //         Container(
-            //           width: 400.0,
-            //           height: 50.0,
-            //           decoration: BoxDecoration(
-            //             color: Colors.white24,
-            //             borderRadius:  BorderRadius.circular(10),
-            //           ),
-            //           child: const TextField(
-            //             decoration: InputDecoration(
-            //               hintStyle: TextStyle(fontSize: 17, color: Colors.white60,),
-            //               hintText: 'Search anything . . . ',
-            //               prefixIcon: Icon(Icons.search),
-            //               border: InputBorder.none,
-            //               contentPadding: EdgeInsets.all(20),
-            //             ),
-            //           ),
-            //         ),
-            //         const SizedBox(width: 50.0,),
-            //         const Icon(Icons.home_rounded,
-            //         size: 20.0,
-            //         color: Colors.white60,),
-            //         const SizedBox(width: 25.0,),
-            //         const Icon(Icons.home_rounded,
-            //           size: 20.0,
-            //           color: Colors.white60,),
-            //         const SizedBox(width: 25.0,),
-            //         const Icon(Icons.home_rounded,
-            //           size: 20.0,
-            //           color: Colors.white60,),
-            //         const SizedBox(width: 25.0,),
-            //         const Icon(Icons.home_rounded,
-            //           size: 20.0,
-            //           color: Colors.white60,)
-            //       ],
-            //     ),
-            //   ),
-            //   // title: Text(
-            //   //   "Instagram",
-            //   //   style: GoogleFonts.,
-            //   // ),
-            //   //centerTitle: true,
-            //   //leading: const Icon(Icons.star),
-            //   //elevation: 20.0,
-            //   //foregroundColor: Colors.white,
-            //   backgroundColor: Colors.black,
-            //   toolbarHeight: 60.0,
-            // ),
-            body: Material(
-              color: Colors.red,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      home: Builder(builder: (context) {
+        return Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
+                width: MediaQuery.of(context).size.width,
+                child: WindowTitleBarBox(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: MoveWindow(
+                          child: const Center(
+                            child: Text(
+                              "ChatterBot",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const WindowButtons(),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.95,
+                child: Row(
                   children: [
                     Container(
                       height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width*0.4,
+                      width: MediaQuery.of(context).size.width * 0.05,
                       decoration: const BoxDecoration(
-                        gradient: LinearGradient(colors: [Colors.white, Colors.white70],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight)
-                      ),
+                          gradient: LinearGradient(
+                              colors: [Colors.white, Colors.black],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight)),
                     ),
                     Container(
-                      child: WindowTitleBarBox(
-                        child: Row(
-                          children: [
-                            Expanded(child: Container()),
-                            WindowButtons(),
-                          ],
-                        ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [],
                       ),
                       height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width*0.6,
+                      width: MediaQuery.of(context).size.width * 0.2,
                       decoration: const BoxDecoration(
-                        gradient: LinearGradient(colors: [Colors.white60,Colors.white],
-                            end: Alignment.topCenter,
-                            begin: Alignment.bottomLeft)
-                      ),
+                          gradient: LinearGradient(
+                              colors: [Colors.white60, Colors.black],
+                              end: Alignment.topCenter,
+                              begin: Alignment.bottomLeft)),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.white60, Colors.black],
+                              end: Alignment.topCenter,
+                              begin: Alignment.bottomLeft)),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width * 0.35,
+                      decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Colors.white60, Colors.black],
+                              end: Alignment.topCenter,
+                              begin: Alignment.bottomLeft)),
                     ),
                   ],
                 ),
               ),
-            ),
-          );
-        }
-      ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
