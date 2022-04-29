@@ -4,10 +4,17 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 void main() {
   runApp(const DesktopApp());
+  doWhenWindowReady((){
+    var initialSize = const Size(600,450);
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.title = "ChatterBot";
+    appWindow.show();
+  });
 }
 
 var buttonColors = WindowButtonColors(
-  iconNormal: Colors.white,
+  iconNormal: Colors.black,
   iconMouseDown: Colors.white10,
   iconMouseOver: Colors.white,
 );
@@ -50,15 +57,18 @@ class _DesktopAppState extends State<DesktopApp> {
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
+              Container(
+                color: Colors.white10,
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width,
                 child: WindowTitleBarBox(
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Expanded(
                         child: MoveWindow(
-                          child: const Center(
+                          child: const SizedBox(
+                            // height: MediaQuery.of(context).size.height * 0.01, --> Not performing any action
                             child: Text(
                               "ChatterBot",
                               style: TextStyle(
