@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const DesktopApp());
-  doWhenWindowReady((){
-    var initialSize = const Size(600,450);
+  doWhenWindowReady(() {
+    var initialSize = const Size(600, 450);
     appWindow.minSize = initialSize;
     appWindow.size = initialSize;
     appWindow.title = "ChatterBot";
@@ -15,7 +15,7 @@ void main() {
 
 var buttonColors = WindowButtonColors(
   iconNormal: Colors.black,
-  iconMouseDown: Colors.white10,
+  iconMouseDown: Colors.white,
   iconMouseOver: Colors.white,
 );
 
@@ -48,17 +48,16 @@ class DesktopApp extends StatefulWidget {
 class _DesktopAppState extends State<DesktopApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return FluentApp(
+      theme: ThemeData(),
       title: "ChatterBot",
       debugShowCheckedModeBanner: false,
-      darkTheme: ThemeData(),
       home: Builder(builder: (context) {
-        return Scaffold(
-          body: Column(
+        return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                color: Colors.white10,
+                color: Colors.white,
                 height: MediaQuery.of(context).size.height * 0.05,
                 width: MediaQuery.of(context).size.width,
                 child: WindowTitleBarBox(
@@ -69,11 +68,13 @@ class _DesktopAppState extends State<DesktopApp> {
                         child: MoveWindow(
                           child: const SizedBox(
                             // height: MediaQuery.of(context).size.height * 0.01, --> Not performing any action
-                            child: Text(
-                              "ChatterBot",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
+                            child: Center(
+                              child: Text(
+                                "ChatterBot",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -93,49 +94,64 @@ class _DesktopAppState extends State<DesktopApp> {
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width * 0.05,
                       decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.white, Colors.black],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight)),
+                        gradient: LinearGradient(
+                          colors: [Colors.white, Colors.black],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text("Container 1"),
+                      ),
                     ),
                     Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [],
-                      ),
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width * 0.2,
                       decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.white60, Colors.black],
-                              end: Alignment.topCenter,
-                              begin: Alignment.bottomLeft)),
+                        gradient: LinearGradient(
+                          colors: [Colors.white, Colors.black],
+                          end: Alignment.bottomCenter,
+                          begin: Alignment.topCenter,
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text("Container 2"),
+                      ),
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width * 0.4,
                       decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.white60, Colors.black],
-                              end: Alignment.topCenter,
-                              begin: Alignment.bottomLeft)),
+                        gradient: LinearGradient(
+                          colors: [Colors.white, Colors.black],
+                          end: Alignment.bottomCenter,
+                          begin: Alignment.topCenter,
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text("Container 3"),
+                      ),
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width * 0.35,
                       decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: [Colors.white60, Colors.black],
-                              end: Alignment.topCenter,
-                              begin: Alignment.bottomLeft)),
+                        gradient: LinearGradient(
+                          colors: [Colors.white, Colors.black],
+                          end: Alignment.bottomCenter,
+                          begin: Alignment.topCenter,
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text("Container 4"),
+                      ),
                     ),
                   ],
                 ),
               ),
             ],
-          ),
-        );
-      }),
+          );
+      },),
     );
   }
 }
