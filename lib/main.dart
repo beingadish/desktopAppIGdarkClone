@@ -35,7 +35,7 @@ void main() {
   // of the user to avoid the problem of RenderFlex of the app
 
   doWhenWindowReady(() {
-    var initialSize = const Size(600, 450);
+    var initialSize = const Size(700, 500);
     appWindow.minSize = initialSize;
     appWindow.size = initialSize;
     appWindow.title = "ChatterBot";
@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
   final viewKey = GlobalKey();
   int index = 0;
   final List<AllPages> pages = const [
-     AllPages(
+    AllPages(
       title: "Home",
       iconData: FluentIcons.home_group,
       pageName: Pages.home,
@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         source: Text(""),
       ),
     ),
-     AllPages(
+    AllPages(
       title: "Messages",
       iconData: FluentIcons.skype_message,
       pageName: Pages.message,
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         source: Text("5"),
       ),
     ),
-     AllPages(
+    AllPages(
       title: "Friends",
       iconData: FluentIcons.people,
       pageName: Pages.friends,
@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         source: Text("5"),
       ),
     ),
-     AllPages(
+    AllPages(
       title: "Calls",
       iconData: FluentIcons.phone,
       pageName: Pages.calls,
@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         source: Text("2"),
       ),
     ),
-     AllPages(
+    AllPages(
       title: "Bookmarked",
       iconData: FluentIcons.double_bookmark,
       pageName: Pages.bookmarked,
@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
         source: Text(""),
       ),
     ),
-     AllPages(
+    AllPages(
       title: "Settings",
       iconData: FluentIcons.settings,
       pageName: Pages.settings,
@@ -164,21 +164,50 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
   @override
   Widget build(BuildContext context) {
     return NavigationView(
+      appBar: NavigationAppBar(
+        title: MoveWindow(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              SizedBox(width: 20.0,),
+               Text("ChatterBot"),
+            ],
+          ),
+        ),
+        // leading: MoveWindow(
+        //   child: const Icon(FluentIcons.add_online_meeting),
+        // ),
+        automaticallyImplyLeading: false,
+        actions: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+              child: MoveWindow(),
+            ),
+            const WindowButtons(),
+          ],
+        ),
+      ),
       key: viewKey,
       pane: NavigationPane(
-          indicator: const EndNavigationIndicator(
+          indicator: const StickyNavigationIndicator(
             color: Colors.white,
           ),
           selected: index,
           onChanged: (i) => setState(() {
                 index = i;
               }),
-          displayMode: PaneDisplayMode.compact,
-          items: pages.map<NavigationPaneItem>(((e) => PaneItem(icon: Icon(e.iconData), title: Text(e.title)))).toList()),
+          displayMode: PaneDisplayMode.auto,
+          items: pages
+              .map<NavigationPaneItem>(((e) =>
+                  PaneItem(icon: Icon(e.iconData), title: Text(e.title))))
+              .toList()),
       content: NavigationBody.builder(
           index: index,
           itemBuilder: (context, index) {
-            return Text(pages[index].title);
+            return const Shell();
           }),
     );
   }
@@ -198,100 +227,105 @@ class _ShellState extends State<Shell> {
       builder: (context) {
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height * 0.05,
-              width: MediaQuery.of(context).size.width,
-              child: WindowTitleBarBox(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Expanded(
-                      child: MoveWindow(
-                        child: const SizedBox(
-                          // height: MediaQuery.of(context).size.height * 0.01, --> Not performing any action
-                          child: Center(
-                            child: Text(
-                              "ChatterBot",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const WindowButtons(),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.95,
-              child: Row(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width * 0.05,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.white, Colors.black],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
-                    child: const Center(
-                      child: Text("Container 1"),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width * 0.2,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.white, Colors.black],
-                        end: Alignment.bottomCenter,
-                        begin: Alignment.topCenter,
-                      ),
-                    ),
-                    child: const Center(
-                      child: Text("Container 2"),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width * 0.4,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.white, Colors.black],
-                        end: Alignment.bottomCenter,
-                        begin: Alignment.topCenter,
-                      ),
-                    ),
-                    child: const Center(
-                      child: Text("Container 3"),
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width * 0.35,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.white, Colors.black],
-                        end: Alignment.bottomCenter,
-                        begin: Alignment.topCenter,
-                      ),
-                    ),
-                    child: const Center(
-                      child: Text("Container 4"),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          children: const [
+            
+            SizedBox(height: 30.0,),
+
+            // Container(
+            //   color: Colors.white,
+            //   height: MediaQuery.of(context).size.height * 0.05,
+            //   width: MediaQuery.of(context).size.width,
+            //   child: WindowTitleBarBox(
+            //     child: Row(
+            //       crossAxisAlignment: CrossAxisAlignment.stretch,
+            //       children: [
+            //         Expanded(
+            //           child: MoveWindow(
+            //             child: const SizedBox(
+            //               // height: MediaQuery.of(context).size.height * 0.01, --> Not performing any action
+            //               child: Center(
+            //                 child: Text(
+            //                   "ChatterBot",
+            //                   style: TextStyle(
+            //                     color: Colors.black,
+            //                     fontWeight: FontWeight.bold,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         const WindowButtons(),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   width: double.maxFinite,
+            //   height: MediaQuery.of(context).size.height * 0.95,
+            //   child: Row(
+            //     children: [
+            //       Container(
+            //         height: MediaQuery.of(context).size.height,
+            //         width: MediaQuery.of(context).size.width * 0.05,
+            //         decoration: const BoxDecoration(
+            //           gradient: LinearGradient(
+            //             colors: [Colors.white, Colors.black],
+            //             begin: Alignment.topCenter,
+            //             end: Alignment.bottomRight,
+            //           ),
+            //         ),
+            //         child: const Center(
+            //           child: Text("Container 1"),
+            //         ),
+            //       ),
+            //       Container(
+            //         height: MediaQuery.of(context).size.height,
+            //         width: MediaQuery.of(context).size.width * 0.2,
+            //         decoration: const BoxDecoration(
+            //           gradient: LinearGradient(
+            //             colors: [Colors.white, Colors.black],
+            //             end: Alignment.bottomCenter,
+            //             begin: Alignment.topCenter,
+            //           ),
+            //         ),
+            //         child: const Center(
+            //           child: Text("Container 2"),
+            //         ),
+            //       ),
+            //       Container(
+            //         height: MediaQuery.of(context).size.height,
+            //         width: MediaQuery.of(context).size.width * 0.4,
+            //         decoration: const BoxDecoration(
+            //           gradient: LinearGradient(
+            //             colors: [Colors.white, Colors.black],
+            //             end: Alignment.bottomCenter,
+            //             begin: Alignment.topCenter,
+            //           ),
+            //         ),
+            //         child: const Center(
+            //           child: Text("Container 3"),
+            //         ),
+            //       ),
+            //       Container(
+            //         height: MediaQuery.of(context).size.height,
+            //         width: MediaQuery.of(context).size.width * 0.35,
+            //         decoration: const BoxDecoration(
+            //           gradient: LinearGradient(
+            //             colors: [Colors.white, Colors.black],
+            //             end: Alignment.bottomCenter,
+            //             begin: Alignment.topCenter,
+            //           ),
+            //         ),
+            //         child: const Center(
+            //           child: Text("Container 4"),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
+
           ],
         );
       },
