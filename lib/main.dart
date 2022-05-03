@@ -4,6 +4,8 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'hex';
 // import 'package:window_manager/window_manager.dart';
 
 // unused [import 'package:window_manager/window_manager.dart';]
@@ -223,6 +225,19 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
   }
 }
 
+class DarkThemeScheme{
+  final Color heading = material.Colors.blueGrey;
+  final Color paragraph = Colors.grey;
+  final Color divider = Colors.white;
+}
+
+class LightThemeScheme{
+  final Color heading = Colors.red;
+  final Color paragraph = Colors.grey;
+  final Color divider = Colors.white;
+}
+
+
 class Shell extends StatefulWidget {
   var shellIndex=0;
    Shell({Key? key, required this.shellIndex}) : super(key: key);
@@ -231,16 +246,18 @@ class Shell extends StatefulWidget {
   State<Shell> createState() => _ShellState();
 }
 
+var darkColors = DarkThemeScheme();
+
 Padding buildTopic(String topicName) {
   return Padding(
     padding: const EdgeInsets.only(top: 10, bottom: 20.0, left: 20.0),
     child: Builder(
       builder: (context) {
         return Text(
-          "$topicName :",
-          style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width*0.045,
-            color: Colors.white,
+          topicName,
+          style: GoogleFonts.oleoScript(
+            fontSize: MediaQuery.of(context).size.width*0.042,
+            color: darkColors.heading,
           ),
         );
       }
