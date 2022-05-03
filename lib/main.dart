@@ -233,14 +233,17 @@ class Shell extends StatefulWidget {
 
 Padding buildTopic(String topicName) {
   return Padding(
-    padding: const EdgeInsets.only(top: 10, bottom: 20.0),
-    child: Text(
-      "$topicName :",
-      style: const TextStyle(
-        fontSize: 30.0,
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-      ),
+    padding: const EdgeInsets.only(top: 10, bottom: 20.0, left: 20.0),
+    child: Builder(
+      builder: (context) {
+        return Text(
+          "$topicName :",
+          style: TextStyle(
+            fontSize: MediaQuery.of(context).size.width*0.045,
+            color: Colors.white,
+          ),
+        );
+      }
     ),
   );
 }
@@ -367,7 +370,7 @@ class _ShellState extends State<Shell> {
     if(widget.shellIndex == 0){
       return Builder(
         builder: (context) {
-          return buildTopic("Home Page");
+          return buildTopic("Welcome !");
         },
       );
     }
