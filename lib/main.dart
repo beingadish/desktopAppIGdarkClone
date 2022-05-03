@@ -1,6 +1,7 @@
 import 'package:desktop_app/models/all_pages.dart';
 import 'package:desktop_app/models/pages.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter/material.dart' as material;
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:window_manager/window_manager.dart';
 // import 'package:window_manager/window_manager.dart';
@@ -44,7 +45,9 @@ void main() {
 }
 
 var buttonColors = WindowButtonColors(
-  iconNormal: Colors.black,
+  normal: Colors.transparent,
+  mouseOver: Colors.blue,
+  iconNormal: Colors.white,
   iconMouseDown: Colors.white,
   iconMouseOver: Colors.white,
 );
@@ -104,7 +107,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with WindowListener {
   final viewKey = GlobalKey();
   int index = 0;
-  final List<AllPages> pages = const [
+  final List<AllPages> menu = const [
     AllPages(
       title: "Home",
       iconData: FluentIcons.home_group,
@@ -169,16 +172,15 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              SizedBox(width: 20.0,),
-               Text("ChatterBot"),
+            children: [
+              Text(menu[index].title + " Page"),
             ],
           ),
         ),
-        // leading: MoveWindow(
-        //   child: const Icon(FluentIcons.add_online_meeting),
-        // ),
-        automaticallyImplyLeading: false,
+        leading: MoveWindow(
+          child: Icon(menu[index].iconData),
+        ),
+        // automaticallyImplyLeading: true,
         actions: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -186,149 +188,216 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
             Expanded(
               child: MoveWindow(),
             ),
-            const WindowButtons(),
+            MoveWindow(
+              child: const WindowButtons(),
+            ),
           ],
         ),
       ),
       key: viewKey,
       pane: NavigationPane(
-          indicator: const StickyNavigationIndicator(
-            color: Colors.white,
-          ),
-          selected: index,
-          onChanged: (i) => setState(() {
-                index = i;
-              }),
-          displayMode: PaneDisplayMode.auto,
-          items: pages
-              .map<NavigationPaneItem>(((e) =>
-                  PaneItem(icon: Icon(e.iconData), title: Text(e.title))))
-              .toList()),
+        indicator: const StickyNavigationIndicator(
+          color: Colors.white,
+        ),
+        selected: index,
+        onChanged: (i) => setState(() {
+          index = i;
+        }),
+        displayMode: PaneDisplayMode.compact,
+        items: menu
+            .map<NavigationPaneItem>(
+              ((e) => PaneItem(
+                    icon: Icon(e.iconData),
+                    title: Text(e.title),
+                    infoBadge: (e.info),
+                  )),
+            )
+            .toList(),
+      ),
       content: NavigationBody.builder(
           index: index,
           itemBuilder: (context, index) {
-            return const Shell();
+            return Shell(shellIndex: index,);
           }),
     );
   }
 }
 
 class Shell extends StatefulWidget {
-  const Shell({Key? key}) : super(key: key);
+  var shellIndex=0;
+   Shell({Key? key, required this.shellIndex}) : super(key: key);
 
   @override
   State<Shell> createState() => _ShellState();
 }
 
+Padding buildTopic(String topicName) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10, bottom: 20.0),
+    child: Text(
+      "$topicName :",
+      style: const TextStyle(
+        fontSize: 30.0,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  );
+}
+
+material.InkWell buildTile(String heading, String content, String imageLoc) {
+  return material.InkWell(
+    borderRadius: BorderRadius.circular(10.0),
+    child: material.Ink(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                heading,
+                style: const TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.white,
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 5.0),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 6.0),
+                  child: Text(
+                    content,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+      height: 150,
+      width: 250,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(imageLoc),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+              material.Colors.black12.withOpacity(0.4), BlendMode.dstATop),
+        ),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    )
+  );
+}
+
+SizedBox hSpace() {
+  return const SizedBox(
+    width: 10.0,
+  );
+}
+
+SizedBox vSpace() {
+  return const SizedBox(
+    height: 10.0,
+  );
+}
+
+SingleChildScrollView buildTileRow(
+    String h1,
+    String h2,
+    String h3,
+    String h4,
+    String c1,
+    String c2,
+    String c3,
+    String c4,
+    String l1,
+    String l2,
+    String l3,
+    String l4) {
+  return SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      children: [
+        buildTile(h1, c1, l1),
+        hSpace(),
+        buildTile(h2, c2, l2),
+        hSpace(),
+        buildTile(h3, c3, l3),
+        hSpace(),
+        buildTile(h4, c4, l4),
+        hSpace(),
+        hSpace(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            material.ElevatedButton(
+              onPressed: () {},
+              child: const Center(child: Icon(material.Icons.arrow_forward_outlined)),
+              style: material.ElevatedButton.styleFrom(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                primary: Colors.black,
+              ),
+            ),
+            const Text(
+              "See More !",
+              style: TextStyle(
+                color: material.Colors.white60,
+                fontSize: 18,
+              ),
+            ),
+          ],
+        ),
+        hSpace(),
+      ],
+    ),
+  );
+}
+
+
 class _ShellState extends State<Shell> {
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            
-            SizedBox(height: 30.0,),
-
-            // Container(
-            //   color: Colors.white,
-            //   height: MediaQuery.of(context).size.height * 0.05,
-            //   width: MediaQuery.of(context).size.width,
-            //   child: WindowTitleBarBox(
-            //     child: Row(
-            //       crossAxisAlignment: CrossAxisAlignment.stretch,
-            //       children: [
-            //         Expanded(
-            //           child: MoveWindow(
-            //             child: const SizedBox(
-            //               // height: MediaQuery.of(context).size.height * 0.01, --> Not performing any action
-            //               child: Center(
-            //                 child: Text(
-            //                   "ChatterBot",
-            //                   style: TextStyle(
-            //                     color: Colors.black,
-            //                     fontWeight: FontWeight.bold,
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         const WindowButtons(),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   width: double.maxFinite,
-            //   height: MediaQuery.of(context).size.height * 0.95,
-            //   child: Row(
-            //     children: [
-            //       Container(
-            //         height: MediaQuery.of(context).size.height,
-            //         width: MediaQuery.of(context).size.width * 0.05,
-            //         decoration: const BoxDecoration(
-            //           gradient: LinearGradient(
-            //             colors: [Colors.white, Colors.black],
-            //             begin: Alignment.topCenter,
-            //             end: Alignment.bottomRight,
-            //           ),
-            //         ),
-            //         child: const Center(
-            //           child: Text("Container 1"),
-            //         ),
-            //       ),
-            //       Container(
-            //         height: MediaQuery.of(context).size.height,
-            //         width: MediaQuery.of(context).size.width * 0.2,
-            //         decoration: const BoxDecoration(
-            //           gradient: LinearGradient(
-            //             colors: [Colors.white, Colors.black],
-            //             end: Alignment.bottomCenter,
-            //             begin: Alignment.topCenter,
-            //           ),
-            //         ),
-            //         child: const Center(
-            //           child: Text("Container 2"),
-            //         ),
-            //       ),
-            //       Container(
-            //         height: MediaQuery.of(context).size.height,
-            //         width: MediaQuery.of(context).size.width * 0.4,
-            //         decoration: const BoxDecoration(
-            //           gradient: LinearGradient(
-            //             colors: [Colors.white, Colors.black],
-            //             end: Alignment.bottomCenter,
-            //             begin: Alignment.topCenter,
-            //           ),
-            //         ),
-            //         child: const Center(
-            //           child: Text("Container 3"),
-            //         ),
-            //       ),
-            //       Container(
-            //         height: MediaQuery.of(context).size.height,
-            //         width: MediaQuery.of(context).size.width * 0.35,
-            //         decoration: const BoxDecoration(
-            //           gradient: LinearGradient(
-            //             colors: [Colors.white, Colors.black],
-            //             end: Alignment.bottomCenter,
-            //             begin: Alignment.topCenter,
-            //           ),
-            //         ),
-            //         child: const Center(
-            //           child: Text("Container 4"),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
-
-          ],
-        );
-      },
-    );
+    if(widget.shellIndex == 0){
+      return Builder(
+        builder: (context) {
+          return buildTopic("Home Page");
+        },
+      );
+    }
+    else if(widget.shellIndex == 1){
+      return ScaffoldPage.scrollable(children: const [
+        Text("Message")
+      ],);
+    }
+    else if(widget.shellIndex == 2){
+      return ScaffoldPage.scrollable(children: const [
+        Text("Friends")
+      ],);
+    }
+    else if(widget.shellIndex == 3){
+      return ScaffoldPage.scrollable(children: const [
+        Text("Call")
+      ],);
+    }
+    else if(widget.shellIndex == 4){
+      return ScaffoldPage.scrollable(children: const [
+        Text("Bookmarked")
+      ],);
+    }
+    else if(widget.shellIndex == 5){
+      return ScaffoldPage.scrollable(children: const [
+        Text("Settings")
+      ],);
+    }
+    else{
+      return Container();
+    }
   }
 }
