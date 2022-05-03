@@ -5,7 +5,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'hex';
+import 'package:hexcolor/hexcolor.dart' as hc;
 // import 'package:window_manager/window_manager.dart';
 
 // unused [import 'package:window_manager/window_manager.dart';]
@@ -90,7 +90,7 @@ class _DesktopAppState extends State<DesktopApp> {
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
-        accentColor: Colors.blue,
+        accentColor: Colors.red,
       ),
       title: "ChatterBot",
       debugShowCheckedModeBanner: false,
@@ -226,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 }
 
 class DarkThemeScheme{
-  final Color heading = material.Colors.blueGrey;
+  final Color heading = Colors.red;
   final Color paragraph = Colors.grey;
   final Color divider = Colors.white;
 }
@@ -385,10 +385,33 @@ class _ShellState extends State<Shell> {
   @override
   Widget build(BuildContext context) {
     if(widget.shellIndex == 0){
-      return Builder(
-        builder: (context) {
-          return buildTopic("Welcome !");
-        },
+      return material.Material(
+        child: Builder(
+          builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                buildTopic("Welcome !"),
+                vSpace(),
+                buildTileRow(
+                    "Russian-Ukraine",
+                    "Russian-Ukraine",
+                    "Russian-Ukraine",
+                    "Covid Highlights",
+                    "Pak PM Imran Khan says 'so much excitement' as he lands in Moscow amid war with Ukraine ",
+                    "How Ukraine's armed forces shape up against Russia's",
+                    "Oil and gas stocks tumble as Brent hits \$100 mark on Russia-Ukraine crisis; IGL, RIL, Petronet fall",
+                    "Coronavirus Highlights: India Records 15,102 New Covid Cases, the daily positivity rate on Wednesday was at 1.28 per cent.",
+                    "assets/images/pak.jpg",
+                    "assets/images/ru2.jpg",
+                    "assets/images/ru6.webp",
+                    "assets/images/ru7.jpg"),
+                vSpace(),
+              ],
+            );
+          },
+        ),
       );
     }
     else if(widget.shellIndex == 1){
