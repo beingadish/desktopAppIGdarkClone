@@ -11,7 +11,6 @@ import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:window_manager/window_manager.dart';
 import 'models/colorThemes.dart';
 
-
 // import 'package:window_manager/window_manager.dart';
 
 // unused [import 'package:window_manager/window_manager.dart';]
@@ -22,7 +21,6 @@ import 'models/colorThemes.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-
   // Commented code refers to the window_manager package which is not working
   // having issues with RenderFlex of the app
   // for using this we must first async the main function
@@ -226,49 +224,44 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       content: NavigationBody.builder(
           index: index,
           itemBuilder: (context, index) {
-            return Shell(shellIndex: index,);
+            return Shell(
+              shellIndex: index,
+            );
           }),
     );
   }
 }
 
-
-
-
 class Shell extends StatefulWidget {
-  var shellIndex=0;
-   Shell({Key? key, required this.shellIndex}) : super(key: key);
+  var shellIndex = 0;
+
+  Shell({Key? key, required this.shellIndex}) : super(key: key);
 
   @override
   State<Shell> createState() => _ShellState();
 }
 
-
-
-
 class _ShellState extends State<Shell> {
   @override
   Widget build(BuildContext context) {
-    if(widget.shellIndex == 0){
+    if (widget.shellIndex == 0) {
       return const HomeShell();
-    }
-    else if(widget.shellIndex == 1){
+    } else if (widget.shellIndex == 1) {
       return const MessagesShell();
-    }
-    else if(widget.shellIndex == 2){
+    } else if (widget.shellIndex == 2) {
       return const FriendsShell();
-    }
-    else if(widget.shellIndex == 3){
+    } else if (widget.shellIndex == 3) {
       return const CallShell();
-    }
-    else if(widget.shellIndex == 4){
+    } else if (widget.shellIndex == 4) {
       return const BookmarkedShell();
-    }
-    else if(widget.shellIndex == 5){
+    } else if (widget.shellIndex == 5) {
       return const SettingShell();
-    }
-    else{
-      return Container();
+    } else {
+      return Container(
+        child: const Center(
+          child: Text("Something Error Occurred"),
+        ),
+      );
     }
   }
 }
