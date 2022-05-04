@@ -1,6 +1,11 @@
 import 'package:desktop_app/models/all_pages.dart';
 import 'package:desktop_app/models/pages.dart';
-import 'package:desktop_app/shells/homePage.dart';
+import 'package:desktop_app/shells/bookmarkedShell.dart';
+import 'package:desktop_app/shells/callShell.dart';
+import 'package:desktop_app/shells/friendsShell.dart';
+import 'package:desktop_app/shells/homeShell.dart';
+import 'package:desktop_app/shells/messageShell.dart';
+import 'package:desktop_app/shells/settingsShell.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:window_manager/window_manager.dart';
@@ -17,7 +22,7 @@ import 'models/colorThemes.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  
+
   // Commented code refers to the window_manager package which is not working
   // having issues with RenderFlex of the app
   // for using this we must first async the main function
@@ -245,32 +250,22 @@ class _ShellState extends State<Shell> {
   @override
   Widget build(BuildContext context) {
     if(widget.shellIndex == 0){
-      return const HomePage();
+      return const HomeShell();
     }
     else if(widget.shellIndex == 1){
-      return ScaffoldPage.scrollable(children: const [
-        Text("Message")
-      ],);
+      return const MessagesShell();
     }
     else if(widget.shellIndex == 2){
-      return ScaffoldPage.scrollable(children: const [
-        Text("Friends")
-      ],);
+      return const FriendsShell();
     }
     else if(widget.shellIndex == 3){
-      return ScaffoldPage.scrollable(children: const [
-        Text("Call")
-      ],);
+      return const CallShell();
     }
     else if(widget.shellIndex == 4){
-      return ScaffoldPage.scrollable(children: const [
-        Text("Bookmarked")
-      ],);
+      return const BookmarkedShell();
     }
     else if(widget.shellIndex == 5){
-      return ScaffoldPage.scrollable(children: const [
-        Text("Settings")
-      ],);
+      return const SettingShell();
     }
     else{
       return Container();

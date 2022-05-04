@@ -3,11 +3,11 @@ import 'package:flutter/material.dart' as material;
 import 'package:google_fonts/google_fonts.dart';
 import '../models/colorThemes.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeShell extends StatefulWidget {
+  const HomeShell({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeShell> createState() => _HomeShellState();
 }
 
 var darkColors = DarkThemeScheme();
@@ -144,7 +144,7 @@ SingleChildScrollView buildTileRow(
   );
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     return material.Material(
