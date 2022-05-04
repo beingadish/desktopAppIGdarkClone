@@ -12,7 +12,7 @@ class HomeShell extends StatefulWidget {
 
 var darkColors = DarkThemeScheme();
 
-Padding buildTopic(String topicName) {
+Padding heading(String topicName) {
   return Padding(
     padding: const EdgeInsets.only(top: 10, bottom: 20.0, left: 20.0),
     child: Builder(
@@ -20,7 +20,7 @@ Padding buildTopic(String topicName) {
           return Text(
             topicName,
             style: GoogleFonts.oleoScript(
-              fontSize: MediaQuery.of(context).size.width*0.042,
+              fontSize: MediaQuery.of(context).size.width*0.05,
               color: darkColors.heading,
             ),
           );
@@ -29,54 +29,9 @@ Padding buildTopic(String topicName) {
   );
 }
 
-material.InkWell buildTile(String heading, String content, String imageLoc) {
-  return material.InkWell(
-      borderRadius: BorderRadius.circular(10.0),
-      child: material.Ink(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  heading,
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.white,
-                    fontSize: 25.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 5.0),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
-                    child: Text(
-                      content,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-        height: 150,
-        width: 250,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(imageLoc),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                material.Colors.black12.withOpacity(0.4), BlendMode.dstATop),
-          ),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      )
+material.CircleAvatar story(String heading, String content, String imageLoc) {
+  return material.CircleAvatar(
+    backgroundImage: ,
   );
 }
 
@@ -148,17 +103,20 @@ class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
     return material.Material(
-      child: Builder(
-        builder: (context) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildTopic("Welcome !"),
-              vSpace(),
-            ],
-          );
-        },
+      child: material.Scaffold(
+        backgroundColor: material.Colors.blueGrey,
+        body: Builder(
+          builder: (context) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                heading("Welcome !"),
+                vSpace(),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

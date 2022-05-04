@@ -1,6 +1,7 @@
 // Model Imports
 import 'package:desktop_app/models/all_pages.dart';
 import 'package:desktop_app/models/pages.dart';
+import 'package:desktop_app/models/colorThemes.dart';
 
 // Shell Imports
 import 'package:desktop_app/shells/bookmarkedShell.dart';
@@ -14,6 +15,7 @@ import 'package:desktop_app/shells/settingsShell.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flutter/material.dart' as m;
 // import 'package:window_manager/window_manager.dart';
 
 // unused [import 'package:window_manager/window_manager.dart';]
@@ -53,6 +55,8 @@ void main() {
     appWindow.show();
   });
 }
+
+var darkColor = DarkThemeScheme();
 
 var buttonColors = WindowButtonColors(
   normal: Colors.transparent,
@@ -94,11 +98,12 @@ class _DesktopAppState extends State<DesktopApp> {
     return FluentApp(
       theme: ThemeData(
         brightness: Brightness.light,
+        scaffoldBackgroundColor: m.Colors.grey,
         accentColor: Colors.blue,
       ),
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        accentColor: Colors.red,
+        accentColor: Colors.blue,
+        menuColor: m.Colors.blueGrey,
       ),
       title: "ChatterBot",
       debugShowCheckedModeBanner: false,
