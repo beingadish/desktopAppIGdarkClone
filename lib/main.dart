@@ -1,16 +1,19 @@
+// Model Imports
 import 'package:desktop_app/models/all_pages.dart';
 import 'package:desktop_app/models/pages.dart';
+
+// Shell Imports
 import 'package:desktop_app/shells/bookmarkedShell.dart';
 import 'package:desktop_app/shells/callShell.dart';
 import 'package:desktop_app/shells/friendsShell.dart';
 import 'package:desktop_app/shells/homeShell.dart';
 import 'package:desktop_app/shells/messageShell.dart';
 import 'package:desktop_app/shells/settingsShell.dart';
+
+// UI Imports
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:window_manager/window_manager.dart';
-import 'models/colorThemes.dart';
-
 // import 'package:window_manager/window_manager.dart';
 
 // unused [import 'package:window_manager/window_manager.dart';]
@@ -244,6 +247,12 @@ class Shell extends StatefulWidget {
 class _ShellState extends State<Shell> {
   @override
   Widget build(BuildContext context) {
+
+    // Maintaining the Shells from below
+    // Accessing them from the Shell Directory
+    // Shell is the part of Window screen that is displayed along with the Navigation Pane
+    // and is maintained along with the Navigation Pane Index
+
     if (widget.shellIndex == 0) {
       return const HomeShell();
     } else if (widget.shellIndex == 1) {
