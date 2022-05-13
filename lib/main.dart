@@ -12,10 +12,10 @@ import 'package:desktop_app/shells/messageShell.dart';
 import 'package:desktop_app/shells/settingsShell.dart';
 
 // UI Imports
-import 'package:fluent_ui/fluent_ui.dart';
-import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:window_manager/window_manager.dart';
-import 'package:flutter/material.dart' as m;
+import 'package:fluent_ui/fluent_ui.dart'; // for Fluent UI.
+import 'package:bitsdojo_window/bitsdojo_window.dart'; // for custom Window Buttons and Sliding Feature
+import 'package:window_manager/window_manager.dart'; // for managing the windows screen size.
+import 'package:flutter/material.dart' as m; // for using material inside my fluent ui.
 // import 'package:window_manager/window_manager.dart';
 
 // unused [import 'package:window_manager/window_manager.dart';]
@@ -26,6 +26,7 @@ import 'package:flutter/material.dart' as m;
 // import 'package:google_fonts/google_fonts.dart';
 
 void main() {
+
   // Commented code refers to the window_manager package which is not working
   // having issues with RenderFlex of the app
   // for using this we must first async the main function
@@ -56,8 +57,11 @@ void main() {
   });
 }
 
+// importing color themes from colorThemes.dart model
 var darkColor = DarkThemeScheme();
 
+
+// for setting the custom colors of the custom window buttons provided by Bits-Dojo
 var buttonColors = WindowButtonColors(
   normal: Colors.transparent,
   mouseOver: Colors.blue,
@@ -65,6 +69,8 @@ var buttonColors = WindowButtonColors(
   iconMouseDown: Colors.white,
   iconMouseOver: Colors.white,
 );
+
+// made separate Widget Class for Window Buttons later used inside the main app
 
 class WindowButtons extends StatelessWidget {
   const WindowButtons({Key? key}) : super(key: key);
@@ -95,17 +101,18 @@ class DesktopApp extends StatefulWidget {
 class _DesktopAppState extends State<DesktopApp> {
   @override
   Widget build(BuildContext context) {
-    return FluentApp(
-      theme: ThemeData(
+    return FluentApp(     // Same as MaterialApp for material UI
+      theme: ThemeData(     // Light Theme
         brightness: Brightness.light,
         scaffoldBackgroundColor: m.Colors.grey,
         accentColor: Colors.blue,
       ),
-      darkTheme: ThemeData(
+      darkTheme: ThemeData(     // Dark Theme
+        brightness: m.Brightness.dark,      // Used material colors inside the theme.
         accentColor: Colors.blue,
         menuColor: m.Colors.blueGrey,
       ),
-      title: "ChatterBot",
+      title: "ChatterBot",    // for name of the application outside the app below the icon
       debugShowCheckedModeBanner: false,
       home: const MyHomePage(),
     );
@@ -121,14 +128,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with WindowListener {
   final viewKey = GlobalKey();
-  int index = 0;
-  final List<AllPages> menu = const [
+  int index = 0;    // initialising index from 0 so as to open Home Page directly whenever one opens the app.
+  final List<AllPages> menu = const [     // creating list of all page menus using the AllPages Widget class
     AllPages(
       title: "Home",
       iconData: FluentIcons.home_group,
-      pageName: Pages.home,
+      pageName: Pages.home,     // for later purposes just for defining the
       info: InfoBadge(
-        source: Text(""),
+        source: Text(""),   // Notification Text
       ),
     ),
     AllPages(
@@ -173,6 +180,10 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
     ),
   ];
 
+
+  // below created function will be activated whenever the user will click of the window close buttons he/she will
+  // encounter a prompt for the same. for ex : Are you sure want to exit ? YES/NO
+
   // @override
   // void onWindowClose() {
   //   // TODO: implement onWindowClose
@@ -181,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationView(
+    return NavigationView(    // Topmost bar of the app which will contain many other widgets including icons / titles
       appBar: NavigationAppBar(
         title: MoveWindow(
           child: Row(
@@ -196,17 +207,20 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           child: Icon(menu[index].iconData),
         ),
         // automaticallyImplyLeading: true,
-        actions: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Expanded(
-              child: MoveWindow(),
-            ),
-            MoveWindow(
-              child: const WindowButtons(),
-            ),
-          ],
+        actions: Padding(
+          padding: const EdgeInsets.all(0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Expanded(
+                child: MoveWindow(),
+              ),
+              MoveWindow(
+                child: const WindowButtons(),
+              ),
+            ],
+          ),
         ),
       ),
       key: viewKey,

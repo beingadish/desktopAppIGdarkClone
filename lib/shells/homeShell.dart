@@ -19,86 +19,77 @@ Padding heading(String topicName) {
     child: Builder(builder: (context) {
       return Text(
         topicName,
-        style: GoogleFonts.oleoScript(
+        style: GoogleFonts.acme(
           fontSize: MediaQuery.of(context).size.width *
               0.005 *
               (MediaQuery.of(context).size.height) *
               0.009,
-          color: darkColors.heading,
+          color: Colors.white,
         ),
       );
     }),
   );
 }
 
-Builder story() {
-  return Builder(builder: (context) {
-    return AdvancedAvatar(
-      size: (MediaQuery.of(context).size.width) *
-          (MediaQuery.of(context).size.height) *
-          (0.00015),
-      name: "img1",
-      image: const material.AssetImage("asset/images/DP.jpeg"),
-    );
-  });
-}
+// Builder story() {
+//   return Builder(builder: (context) {
+//     return AdvancedAvatar(
+//       size: (MediaQuery.of(context).size.width) *
+//           (MediaQuery.of(context).size.height) *
+//           (0.00015),
+//       name: "img1",
+//       image: const material.AssetImage("asset/images/DP.jpeg"),
+//     );
+//   });
+// }
 
-SizedBox hSpace() {
-  return const SizedBox(
-    width: 10.0,
-  );
-}
+// SizedBox hSpace() {
+//   return const SizedBox(
+//     width: 10.0,
+//   );
+// }
+//
+// SizedBox vSpace() {
+//   return const SizedBox(
+//     height: 10.0,
+//   );
+// }
 
-SizedBox vSpace() {
-  return const SizedBox(
-    height: 10.0,
-  );
-}
-
-ScaffoldPage storyRow() {
-  return ScaffoldPage.scrollable(
-    children: [
-      hSpace(),
-      hSpace(),
-      story(),
-      hSpace(),
-      hSpace(),
-      story(),
-      hSpace(),
-      hSpace(),
-      story(),
-      hSpace(),
-      hSpace(),
-      story(),
-      hSpace(),
-      hSpace(),
-      story(),
-      hSpace(),
-      hSpace(),
-      story(),
-      hSpace(),
-      hSpace(),
-      story(),
-    ],
-
-  );
-}
+// ScaffoldPage storyRow() {
+//   return ScaffoldPage.scrollable(
+//     children: [
+//       hSpace(),
+//       hSpace(),
+//       //story(),
+//       hSpace(),
+//       hSpace(),
+//       //story(),
+//       hSpace(),
+//       hSpace(),
+//       //story(),
+//       hSpace(),
+//       hSpace(),
+//      // story(),
+//       hSpace(),
+//       hSpace(),
+//       //story(),
+//       hSpace(),
+//       hSpace(),
+//       //story(),
+//       hSpace(),
+//       hSpace(),
+//       //story(),
+//     ],
+//
+//   );
+// }
 
 class _HomeShellState extends State<HomeShell> {
   @override
   Widget build(BuildContext context) {
-    return ScaffoldPage.scrollable(
-        // backgroundColor: material.Colors.blueGrey.shade700,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              heading("Welcome !"),
-              vSpace(),
-              storyRow(),
-            ],
-          )
-        ]);
+    return ScaffoldPage.scrollable(children: [
+      //Text("Welcome ! Home Page"),
+      heading("Home Page"),
+    ],);
   }
 }
