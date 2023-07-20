@@ -21,7 +21,7 @@ jobs:
       - uses: microsoft/setup-msbuild@v1.1
       - uses: subosito/flutter-action@v2
         with:
-          lutter-version: '3.7.12'
+          flutter-version: '3.7.12'
           channel: 'stable'
           cache: true
       - run: flutter clean
@@ -30,7 +30,7 @@ jobs:
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/debug/*"
+          artifacts: "build/windows/runner/*"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.WINAPP_RELEASE_TOKEN }}
 
