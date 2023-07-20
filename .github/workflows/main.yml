@@ -1,0 +1,38 @@
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+name: "Build & Release"
+jobs:
+  build:
+    name: Build & Release
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dotnet/nbgv@master
+        id: nbgv
+    # Install the .NET Core workload
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - uses: microsoft/setup-msbuild@v1.1
+      - uses: subosito/flutter-action@v2
+        with:
+          lutter-version: '3.7.12'
+          channel: 'stable'
+          cache: true
+      - run: flutter clean
+      - run: flutter pub get
+      - run: flutter build apk --debug --split-per-abi
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*"
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.WINAPP_RELEASE_TOKEN }}
+
+
+# GITHUB ACTIONS CI/CD CODE
